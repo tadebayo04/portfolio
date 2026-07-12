@@ -543,7 +543,21 @@
     #intro h1{font-size:14px;}
     #track{gap:12px;padding:6px 12px;bottom:150px;}
     .dot-item .label{display:none;}
-    .cards-row{flex-direction:column;gap:14px;}
+    .cards-row{
+      flex-direction:row;
+      overflow-x:auto;
+      gap:12px;
+      padding-bottom:8px;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin;
+      scrollbar-color:var(--line) transparent;
+    }
+    .project-card{
+      flex:0 0 76vw;
+      min-width:76vw;
+      max-height:calc(66vh - 130px);
+      overflow-y:auto;
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -824,7 +838,7 @@
     "..hhhh....",
     ".hhhhhh...",
     ".hssssh...",
-    ".gegegs...",
+    "geegeeg...",
     "..ssss....",
     ".jjjjjj...",
     "wjjjjjjjjw",
@@ -841,7 +855,7 @@
     "..hhhh....",
     ".hhhhhh...",
     ".hssssh...",
-    ".gegegs...",
+    "geegeeg...",
     "..ssss....",
     ".jjjjjj...",
     "wjjjjjjjjw",
