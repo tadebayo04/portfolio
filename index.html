@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>TJ Adebayo — Software Engineer</title>
+<meta name="description" content="Oluwatojuba (TJ) Adebayo — Software Engineer building LLM-powered applications and RAG pipelines. Dribble through to see experience, education and projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===================== DESIGN TOKENS ===================== */
+  :root{
+    --bg-night:#0A1826;
+    --bg-panel:#102035;
+    --bg-panel-2:#0D1B2C;
+    --line:#23405C;
+    --line-soft:#1A3049;
+    --chalk:#F3EBDD;
+    --chalk-dim:#9FB0BE;
+    --pitch:#4F9D5C;
+    --pitch-dark:#234A2C;
+    --pitch-line:#DCE9DC;
+    --amber:#FFB238;
+    --amber-dim:#B8791F;
+    --amber-glow:rgba(255,178,56,0.55);
+    --boot:#161210;
+
+    --font-display:'Press Start 2P', monospace;
+    --font-body:'Space Grotesk', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+
+    --zone-w: 1000px;
+    --world-w: 5000px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;padding:0;
+    width:100%;height:100%;
+    background:var(--bg-night);
+    color:var(--chalk);
+    font-family:var(--font-body);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,canvas{image-rendering:pixelated;image-rendering:crisp-edges;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  ::selection{background:var(--amber);color:var(--bg-night);}
+
+  /* ===================== TOPBAR ===================== */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    z-index:50;
+    background:linear-gradient(to bottom, rgba(10,24,38,0.95), rgba(10,24,38,0));
+    pointer-events:none;
+  }
+  .topbar .brand{
+    font-family:var(--font-display);
+    font-size:11px;
+    letter-spacing:0.5px;
+    color:var(--amber);
+    text-shadow:0 0 8px var(--amber-glow);
+  }
+  .topbar .brand span{color:var(--chalk);}
+  .topbar .quicklinks{
+    display:flex;gap:10px;
+    pointer-events:auto;
+  }
+  .topbar .quicklinks a{
+    display:flex;align-items:center;gap:6px;
+    font-family:var(--font-mono);
+    font-size:11px;
+    text-decoration:none;
+    color:var(--chalk-dim);
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    padding:7px 10px;
+    border-radius:3px;
+    transition:border-color .15s, color .15s, transform .15s;
+  }
+  .topbar .quicklinks a:hover, .topbar .quicklinks a:focus-visible{
+    border-color:var(--amber);
+    color:var(--amber);
+    transform:translateY(-1px);
+    outline:none;
+  }
+  .topbar .quicklinks svg{width:13px;height:13px;fill:currentColor;flex:none;}
+
+  /* ===================== STAGE ===================== */
+  #stage{
+    position:fixed;inset:0;
+    overflow:hidden;
+  }
+
+  #sky{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, #12304A 0%, transparent 60%),
+      linear-gradient(to bottom, #0A1826 0%, #0D2136 55%, #0F2A42 75%, #14344E 100%);
+  }
+
+  #clouds{
+    position:absolute;top:0;left:0;height:100%;width:calc(var(--world-w) * 0.4 + 100%);
+    will-change:transform;
+  }
+  .cloud{
+    position:absolute;
+    background:#16324A;
+    opacity:.55;
+    border-radius:2px;
+    box-shadow:
+      12px -6px 0 0 #16324A,
+      -12px 0 0 0 #16324A,
+      6px 8px 0 0 #16324A;
+  }
+
+  #world{
+    position:absolute;left:0;top:0;height:100%;
+    width:var(--world-w);
+    will-change:transform;
+  }
+
+  /* ground / pitch */
+  #ground{
+    position:absolute;left:0;bottom:0;width:100%;height:34%;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 64px),
+      linear-gradient(to bottom, var(--pitch) 0%, var(--pitch-dark) 100%);
+    border-top:3px solid var(--pitch-line);
+  }
+  #ground::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:100%;
+    background:repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0 90px, rgba(255,255,255,0.03) 90px 180px);
+  }
+
+  /* floodlights */
+  .floodlight{
+    position:absolute;bottom:34%;
+    width:14px;
+    text-align:center;
+  }
+  .floodlight .pole{
+    width:6px;height:150px;
+    background:#0C1622;
+    margin:0 auto;
+    border:1px solid #223A50;
+    border-bottom:none;
+  }
+  .floodlight .head{
+    width:44px;height:26px;
+    margin-left:-19px;
+    background:#0C1622;
+    border:1px solid #223A50;
+    position:relative;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+    padding:3px;
+  }
+  .floodlight .bulb{
+    background:#2A2015;
+    border-radius:1px;
+    transition:background .6s ease, box-shadow .6s ease;
+  }
+  .floodlight.lit .bulb{
+    background:var(--amber);
+    box-shadow:0 0 6px var(--amber-glow);
+  }
+  .floodlight .glow{
+    position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+    width:260px;height:260px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--amber-glow) 0%, transparent 65%);
+    opacity:0;
+    transition:opacity .8s ease;
+    pointer-events:none;
+  }
+  .floodlight.lit .glow{opacity:.35;}
+
+  /* footprints */
+  .footprint{
+    position:absolute;bottom:calc(34% + 4px);
+    width:6px;height:6px;
+    background:rgba(243,235,221,0.5);
+    border-radius:1px;
+    pointer-events:none;
+    animation:fp-fade 1.6s ease-out forwards;
+  }
+  @keyframes fp-fade{
+    0%{opacity:.55;}
+    100%{opacity:0;}
+  }
+
+  /* ===================== PLAYER (fixed screen position) ===================== */
+  #player-wrap{
+    position:absolute;
+    bottom:34%;
+    left:32%;
+    width:110px;height:150px;
+    transform:translate(-50%, 0);
+    z-index:20;
+    pointer-events:none;
+  }
+  #player-canvas{
+    position:absolute;
+    left:50%;
+    bottom:4px;
+    width:70px;height:98px;
+    transform:translate(-50%,0) scaleX(1);
+  }
+  #ball-canvas{
+    position:absolute;
+    width:26px;height:26px;
+    left:50%;
+    bottom:0;
+  }
+  #player-shadow{
+    position:absolute;
+    left:50%;bottom:2px;
+    width:54px;height:10px;
+    background:radial-gradient(ellipse, rgba(0,0,0,0.4) 0%, transparent 75%);
+    transform:translate(-50%,0);
+  }
+
+  /* ===================== ZONES / CONTENT CARDS ===================== */
+  .zone{
+    position:absolute;
+    bottom:calc(34% + 40px);
+    width:700px;
+    max-width:84vw;
+  }
+  .zone .card{
+    background:linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-panel-2) 100%);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:22px 26px 18px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.45);
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity .5s ease, transform .5s ease;
+    max-height:calc(66vh - 110px);
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:var(--line) transparent;
+  }
+  .zone .card::-webkit-scrollbar{width:6px;}
+  .zone .card::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  .zone .card::-webkit-scrollbar-track{background:transparent;}
+  .zone.active .card{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .zone .eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin:0 0 10px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .zone .eyebrow::before{
+    content:"";
+    width:16px;height:2px;
+    background:var(--amber);
+    display:inline-block;
+  }
+  .zone h1, .zone h2{
+    font-family:var(--font-display);
+    line-height:1.5;
+    margin:0 0 10px;
+    color:var(--chalk);
+  }
+  .zone h1{font-size:20px;}
+  .zone h2{font-size:15px;}
+  .zone p{
+    font-size:15px;line-height:1.6;
+    color:var(--chalk-dim);
+    margin:0 0 10px;
+  }
+  .zone .meta{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--amber-dim);
+    margin:0 0 12px;
+  }
+  .zone ul.bullets{
+    margin:0 0 14px;padding-left:18px;
+    color:var(--chalk-dim);
+    font-size:14.5px;line-height:1.6;
+  }
+  .zone ul.bullets li{margin-bottom:6px;}
+  .tags{
+    display:flex;flex-wrap:wrap;gap:6px;
+    margin-top:4px;
+  }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    padding:4px 8px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    color:var(--chalk-dim);
+    background:rgba(255,255,255,0.02);
+  }
+
+  /* Player card (hero) */
+  .player-card{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  .player-card .row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-top:1px dashed var(--line-soft);
+    padding:6px 0;
+    font-family:var(--font-mono);
+    font-size:12px;
+  }
+  .player-card .row:first-of-type{border-top:none;}
+  .player-card .row .k{color:var(--chalk-dim);letter-spacing:0.5px;}
+  .player-card .skill-group{margin-top:12px;}
+  .player-card .skill-group h3{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:1px;
+    color:var(--amber-dim);
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+
+  /* Project cards */
+  .projects-wrap{width:960px;max-width:92vw;}
+  .cards-row{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:16px;
+  }
+  .project-card{
+    flex:1 1 0;
+    min-width:0;
+    background:linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-panel-2) 100%);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:18px 20px;
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .zone.active .project-card{opacity:1;transform:translateY(0);}
+  .zone.active .project-card:nth-child(2){transition-delay:.08s;}
+  .zone.active .project-card:nth-child(3){transition-delay:.16s;}
+  .zone.active .project-card:nth-child(4){transition-delay:.24s;}
+  .project-card h3{
+    font-family:var(--font-display);
+    font-size:13px;
+    margin:0 0 8px;
+    color:var(--chalk);
+  }
+  .project-card p{font-size:14px;margin:0 0 10px;color:var(--chalk-dim);line-height:1.6;}
+  .project-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--amber);
+    text-decoration:none;
+    border-bottom:1px dashed var(--amber-dim);
+    padding-bottom:1px;
+  }
+  .project-link.placeholder{
+    color:var(--chalk-dim);
+    border-bottom-color:var(--line);
+  }
+
+  /* Contact zone */
+  .contact-grid{
+    display:flex;flex-direction:column;gap:10px;
+    margin-top:6px;
+  }
+  .contact-btn{
+    display:flex;align-items:center;gap:12px;
+    text-decoration:none;
+    padding:12px 14px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    background:rgba(255,255,255,0.02);
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--chalk);
+    transition:border-color .15s, background .15s, transform .15s;
+  }
+  .contact-btn:hover, .contact-btn:focus-visible{
+    border-color:var(--amber);
+    background:rgba(255,178,56,0.06);
+    transform:translateX(3px);
+    outline:none;
+  }
+  .contact-btn svg{width:16px;height:16px;fill:var(--amber);flex:none;}
+
+  /* ===================== HUD: progress dots ===================== */
+  #track{
+    position:fixed;left:50%;bottom:18px;
+    transform:translateX(-50%);
+    display:flex;gap:22px;
+    z-index:50;
+    background:rgba(10,24,38,0.6);
+    padding:8px 16px;
+    border-radius:20px;
+    border:1px solid var(--line-soft);
+    backdrop-filter:blur(4px);
+  }
+  .dot-item{
+    display:flex;flex-direction:column;align-items:center;gap:5px;
+    background:none;border:none;cursor:pointer;
+    padding:2px;
+    color:var(--chalk-dim);
+  }
+  .dot-item .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--line-soft);
+    border:1px solid var(--line);
+    transition:background .3s, box-shadow .3s, border-color .3s;
+  }
+  .dot-item.visited .dot{
+    background:var(--amber);
+    border-color:var(--amber);
+    box-shadow:0 0 6px var(--amber-glow);
+  }
+  .dot-item.current .dot{
+    box-shadow:0 0 0 3px rgba(255,178,56,0.25);
+  }
+  .dot-item .label{
+    font-family:var(--font-mono);
+    font-size:9px;
+    letter-spacing:0.5px;
+    white-space:nowrap;
+    opacity:0;
+    transform:translateY(2px);
+    transition:opacity .2s, transform .2s;
+  }
+  .dot-item:hover .label, .dot-item:focus-visible .label{opacity:1;transform:translateY(0);}
+  .dot-item:focus-visible{outline:1px solid var(--amber);border-radius:4px;}
+
+  /* ===================== INTRO OVERLAY ===================== */
+  #intro{
+    position:fixed;inset:0;
+    z-index:100;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(6,14,22,0.92);
+    text-align:center;
+    padding:24px;
+    transition:opacity .5s ease, visibility .5s ease;
+  }
+  #intro.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  #intro .box{max-width:440px;}
+  #intro h1{
+    font-family:var(--font-display);
+    font-size:18px;
+    line-height:1.7;
+    color:var(--amber);
+    margin:0 0 6px;
+    text-shadow:0 0 10px var(--amber-glow);
+  }
+  #intro .name-sub{
+    font-family:var(--font-display);
+    font-size:11px;
+    color:var(--chalk-dim);
+    margin:0 0 22px;
+  }
+  #intro .keys{
+    display:flex;gap:10px;justify-content:center;margin:20px 0;
+  }
+  .key{
+    width:38px;height:38px;
+    border:2px solid var(--chalk-dim);
+    border-radius:5px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-mono);font-size:16px;
+    animation:key-pulse 1.6s ease-in-out infinite;
+  }
+  .key:nth-child(2){animation-delay:.3s;}
+  @keyframes key-pulse{
+    0%,100%{border-color:var(--chalk-dim);transform:translateY(0);}
+    50%{border-color:var(--amber);transform:translateY(-3px);}
+  }
+  #intro .hint{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--chalk-dim);
+  }
+  #intro .go-btn{
+    margin-top:22px;
+    background:var(--amber);
+    color:var(--bg-night);
+    border:none;
+    padding:12px 22px;
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:13px;
+    border-radius:4px;
+    cursor:pointer;
+    letter-spacing:0.5px;
+  }
+  #intro .go-btn:hover{background:#ffc568;}
+
+  /* ===================== TOUCH CONTROLS ===================== */
+  #touch-controls{
+    position:fixed;
+    bottom:78px;left:0;right:0;
+    display:none;
+    justify-content:space-between;
+    padding:0 22px;
+    z-index:50;
+    pointer-events:none;
+  }
+  #touch-controls button{
+    pointer-events:auto;
+    width:58px;height:58px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:rgba(16,32,53,0.85);
+    color:var(--amber);
+    font-size:22px;
+    display:flex;align-items:center;justify-content:center;
+    -webkit-tap-highlight-color:transparent;
+  }
+  #touch-controls button:active{background:rgba(255,178,56,0.25);}
+
+  @media (pointer:coarse){
+    #touch-controls{display:flex;}
+  }
+
+  @media (max-width: 640px){
+    .topbar .brand{font-size:9px;}
+    .topbar .quicklinks a span.txt{display:none;}
+    .zone{width:92vw;max-width:92vw;}
+    .zone h1{font-size:16px;}
+    .zone h2{font-size:13px;}
+    #intro h1{font-size:14px;}
+    #track{gap:12px;padding:6px 12px;bottom:150px;}
+    .dot-item .label{display:none;}
+    .cards-row{flex-direction:column;gap:14px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .key{animation:none;}
+    .footprint{animation:none;opacity:0;}
+    .floodlight .bulb, .floodlight .glow{transition:none;}
+  }
+
+  .sr-only{
+    position:absolute;width:1px;height:1px;
+    overflow:hidden;clip:rect(0,0,0,0);
+    white-space:nowrap;
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">TJ<span>.ADEBAYO</span></div>
+    <div class="quicklinks">
+      <a href="https://linkedin.com/in/olu-adebayo04" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        <span class="txt">LinkedIn</span>
+      </a>
+      <a href="https://github.com/tadebayo04" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.27 5.67.42.36.78 1.07.78 2.16v3.2c0 .31.21.66.8.55A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        <span class="txt">GitHub</span>
+      </a>
+      <a href="mailto:tjadebayo04@gmail.com">
+        <svg viewBox="0 0 24 24"><path d="M2 4h20v16H2V4zm2 2.2V6l8 5.5L20 6v.2l-8 5.8-8-5.8zM4 8.6V18h16V8.6l-8 5.6-8-5.6z"/></svg>
+        <span class="txt">Email</span>
+      </a>
+    </div>
+  </header>
+
+  <div id="stage" aria-hidden="false">
+    <div id="sky"></div>
+    <div id="clouds"></div>
+
+    <div id="world">
+      <div id="ground"></div>
+
+      <!-- Floodlights per zone -->
+      <div class="floodlight" id="fl-0" style="left:60px;"><div class="glow"></div><div class="head"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div><div class="pole"></div></div>
+      <div class="floodlight" id="fl-1" style="left:960px;"><div class="glow"></div><div class="head"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div><div class="pole"></div></div>
+      <div class="floodlight" id="fl-2" style="left:1960px;"><div class="glow"></div><div class="head"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div><div class="pole"></div></div>
+      <div class="floodlight" id="fl-3" style="left:2960px;"><div class="glow"></div><div class="head"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div><div class="pole"></div></div>
+      <div class="floodlight" id="fl-4" style="left:4260px;"><div class="glow"></div><div class="head"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div><div class="pole"></div></div>
+
+      <div id="footprint-layer"></div>
+
+      <!-- ================= ZONE 0: KICKOFF / ABOUT ================= -->
+      <section class="zone" id="zone-0" style="left:120px;" data-label="Kickoff">
+        <div class="card player-card">
+          <p class="eyebrow">Kickoff — Player Profile</p>
+          <h1>Oluwatojuba "TJ" Adebayo</h1>
+          <p>Computer Science graduate building LLM-powered applications, RAG pipelines and production-grade AI systems — from retrieval architecture through to deployment. Comfortable across the full stack with Python, React and Node.js, and just as happy debugging a CI pipeline as designing a prompt.</p>
+          <div class="row"><span class="k">POSITION</span><span>Software Engineer — AI/LLM Systems</span></div>
+          <div class="row"><span class="k">BASED IN</span><span>Edinburgh, UK</span></div>
+          <div class="row"><span class="k">CONTACT</span><span>tjadebayo04@gmail.com</span></div>
+          <div class="skill-group">
+            <h3>AI &amp; LLM</h3>
+            <div class="tags">
+              <span class="tag">Anthropic API</span><span class="tag">OpenAI API</span><span class="tag">Prompt Engineering</span>
+              <span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">LangGraph</span>
+              <span class="tag">Multi-agent Architecture</span><span class="tag">Tool Use</span><span class="tag">Embeddings</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Languages &amp; Web</h3>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span>
+              <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">FastAPI</span>
+              <span class="tag">Flask</span><span class="tag">SQL</span><span class="tag">Java</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Data, ML &amp; Cloud</h3>
+            <div class="tags">
+              <span class="tag">MongoDB</span><span class="tag">Firebase</span><span class="tag">Pinecone</span>
+              <span class="tag">scikit-learn</span><span class="tag">NumPy</span><span class="tag">OpenCV</span>
+              <span class="tag">Azure</span><span class="tag">GCP</span><span class="tag">Docker</span><span class="tag">CI/CD</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ZONE 1: EXPERIENCE ================= -->
+      <section class="zone" id="zone-1" style="left:1020px;" data-label="Match Experience">
+        <div class="card">
+          <p class="eyebrow">Match Experience</p>
+          <h2>Full Stack Developer — Intellidigest</h2>
+          <p class="meta">Edinburgh, UK · June 2024 – July 2024</p>
+          <ul class="bullets">
+            <li>Designed and shipped production features for a live platform — including account management and analytics — owning the full lifecycle from solution design through to deployment.</li>
+            <li>Translated business requirements into working software, reducing post-deployment errors from 20% to 4% through rigorous testing, debugging and CI/CD practices.</li>
+            <li>Integrated REST APIs and third-party services into the backend, implementing cloud-based NoSQL storage with Firebase.</li>
+            <li>Used Git with structured branching strategies for version control and cross-functional collaboration.</li>
+            <li>Led development demos and feedback cycles, communicating technical progress clearly to stakeholders.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">Python</span>
+            <span class="tag">Java</span><span class="tag">Firebase</span><span class="tag">REST APIs</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ZONE 2: EDUCATION ================= -->
+      <section class="zone" id="zone-2" style="left:2020px;" data-label="Training Ground">
+        <div class="card">
+          <p class="eyebrow">Training Ground</p>
+          <h2>BSc (Hons) Computer Science — Software Engineering</h2>
+          <p class="meta">Heriot-Watt University, Edinburgh · Sept 2021 – June 2025 · 2:1</p>
+          <ul class="bullets">
+            <li>Strong foundation in software architecture, system design, data structures, algorithms and object-oriented programming.</li>
+            <li>Practical experience across the full SDLC using Agile and DevOps methodologies, with automated testing, CI/CD and version control.</li>
+            <li>Third-year project: built a real-time collaborative whiteboard with React.js and Socket.io, using an event-driven architecture with live state sync across concurrent users.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Software Architecture</span><span class="tag">Agile</span><span class="tag">DevOps</span>
+            <span class="tag">Socket.io</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ZONE 3: PROJECTS ================= -->
+      <section class="zone" id="zone-3" style="left:3020px;" data-label="Highlight Reel">
+        <div class="projects-wrap">
+          <p class="eyebrow">Highlight Reel</p>
+          <div class="cards-row">
+          <div class="project-card">
+            <h3>Football Match Outcome Predictor</h3>
+            <p>An ML pipeline predicting win / draw / loss from historical match data — team form, goals scored and conceded, home/away splits. Compared Random Forest against Logistic Regression using cross-validation, confusion matrices and F1 score to pick the strongest model.</p>
+            <div class="tags" style="margin-bottom:10px;">
+              <span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span>
+            </div>
+            <a href="https://github.com/tadebayo04/World-Cup-Predictor" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+          </div>
+          <div class="project-card">
+            <h3>THERMAL — Drone Heat Loss Detection</h3>
+            <p>A production-grade pipeline processing thermal drone footage to detect building heat loss and generate retrofit reports, cutting manual survey time from 3 hours to under 1 minute per property. Shown at the Anthropic AI Expo, Edinburgh. Built an LLM-powered orchestration layer over the Anthropic Vision API and a RAG-adjacent retrieval pipeline for physics-based estimates with 95% confidence intervals.</p>
+            <div class="tags" style="margin-bottom:10px;">
+              <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">Vision API</span>
+            </div>
+            <a href="https://github.com/detunjiSamuel/Ai-expo-anthropic" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+          </div>
+          <div class="project-card">
+            <h3>News Recommendation Platform</h3>
+            <p>A full-stack AI application with a modular REST API backend applying NLP and LLM-powered recommendations, with a document ingestion and retrieval pipeline analogous to RAG. User preferences stored in Firebase, with the model continuously re-ranking content from live interaction signals.</p>
+            <div class="tags" style="margin-bottom:10px;">
+              <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">React</span><span class="tag">Firebase</span><span class="tag">LLM APIs</span>
+            </div>
+            <a href="https://github.com/tadebayo04/News-Recommender" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ZONE 4: CONTACT ================= -->
+      <section class="zone" id="zone-4" style="left:4320px;" data-label="Full Time">
+        <div class="card">
+          <p class="eyebrow">Full Time — Get In Touch</p>
+          <h2>Let's build something.</h2>
+          <p>Open to software engineering and AI/LLM roles. Reach out below.</p>
+          <div class="contact-grid">
+            <a class="contact-btn" href="mailto:tjadebayo04@gmail.com">
+              <svg viewBox="0 0 24 24"><path d="M2 4h20v16H2V4zm2 2.2V6l8 5.5L20 6v.2l-8 5.8-8-5.8zM4 8.6V18h16V8.6l-8 5.6-8-5.6z"/></svg>
+              tjadebayo04@gmail.com
+            </a>
+            <a class="contact-btn" href="https://linkedin.com/in/olu-adebayo04" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+              linkedin.com/in/olu-adebayo04
+            </a>
+            <a class="contact-btn" href="https://github.com/tadebayo04" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.27 5.67.42.36.78 1.07.78 2.16v3.2c0 .31.21.66.8.55A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+              github.com/tadebayo04
+            </a>
+          </div>
+          <p style="margin-top:18px;font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);">You've reached the end of the pitch. Thanks for dribbling through.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Player, fixed in viewport -->
+    <div id="player-wrap">
+      <div id="player-shadow"></div>
+      <canvas id="player-canvas" width="70" height="98"></canvas>
+      <canvas id="ball-canvas" width="44" height="44"></canvas>
+    </div>
+  </div>
+
+  <!-- Progress track -->
+  <nav id="track" aria-label="Section navigation">
+    <button class="dot-item current" data-zone="0"><span class="dot"></span><span class="label">Kickoff</span></button>
+    <button class="dot-item" data-zone="1"><span class="dot"></span><span class="label">Experience</span></button>
+    <button class="dot-item" data-zone="2"><span class="dot"></span><span class="label">Education</span></button>
+    <button class="dot-item" data-zone="3"><span class="dot"></span><span class="label">Projects</span></button>
+    <button class="dot-item" data-zone="4"><span class="dot"></span><span class="label">Contact</span></button>
+  </nav>
+
+  <div id="touch-controls">
+    <button id="btn-left" aria-label="Move left">◀</button>
+    <button id="btn-right" aria-label="Move right">▶</button>
+  </div>
+
+  <!-- Intro overlay -->
+  <div id="intro">
+    <div class="box">
+      <h1>TJ ADEBAYO</h1>
+      <p class="name-sub">SOFTWARE ENGINEER</p>
+      <p class="hint">Use the arrow keys (or A / D) to dribble across the pitch.<br>Each stop reveals a new part of the story.</p>
+      <div class="keys">
+        <div class="key">←</div>
+        <div class="key">→</div>
+      </div>
+      <button class="go-btn" id="go-btn">Kick Off</button>
+    </div>
+  </div>
+
+  <span id="live-zone" class="sr-only" aria-live="polite"></span>
+
+<script>
+(function(){
+  "use strict";
+
+  var WORLD_W = 5000;
+  var ZONES = [
+    {x: 120,  w: 900,  label: "Kickoff"},
+    {x: 1020, w: 900,  label: "Match Experience"},
+    {x: 2020, w: 900,  label: "Training Ground"},
+    {x: 3020, w: 900,  label: "Highlight Reel"},
+    {x: 4320, w: 700,  label: "Full Time"}
+  ];
+  var lastZone = ZONES[ZONES.length-1];
+  var contentEnd = lastZone.x + lastZone.w + 50;
+
+  var world = document.getElementById('world');
+  var clouds = document.getElementById('clouds');
+  var stage = document.getElementById('stage');
+  var footLayer = document.getElementById('footprint-layer');
+  var liveZoneEl = document.getElementById('live-zone');
+
+  function computeMaxScroll(){
+    return Math.max(WORLD_W - window.innerWidth, contentEnd - window.innerWidth*0.32);
+  }
+
+  function syncWorldWidth(){
+    world.style.width = Math.max(WORLD_W, computeMaxScroll() + window.innerWidth) + 'px';
+  }
+
+  var scrollX = 0;
+  var maxScroll = computeMaxScroll();
+  syncWorldWidth();
+  var keys = {left:false, right:false};
+  var visited = new Set();
+  var currentZoneIdx = 0;
+  var distanceTraveled = 0;
+  var lastFootAt = 0;
+  var facing = 1; // 1 = right, -1 = left
+  var introDismissed = false;
+
+  function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+
+  /* ---------------- Pixel sprite (canvas) ---------------- */
+  var PALETTE = {
+    'h': '#14100D', // hair
+    's': '#8B5A2B', // skin
+    'g': '#101010', // glasses frame
+    'e': '#DDEBF5', // glasses lens / eye
+    'j': '#A9D8E8', // jersey light blue
+    'w': '#FFFFFF', // jersey shoulder trim (white)
+    'n': '#16213F', // shorts/legs navy
+    'o': '#A9D8E8', // socks light blue
+    'b': '#161210'  // boots
+  };
+  var FRAME_A = [
+    "..hhhh....",
+    ".hhhhhh...",
+    ".hssssh...",
+    ".gegegs...",
+    "..ssss....",
+    ".jjjjjj...",
+    "wjjjjjjjjw",
+    ".jjjjjj...",
+    ".jjjjjj...",
+    "..nnnn....",
+    ".nnn.nnn..",
+    ".nnn.onn..",
+    ".oo...oo..",
+    ".bb...bb.."
+  ];
+  /* kick frame: front leg extended toward the ball */
+  var FRAME_B = [
+    "..hhhh....",
+    ".hhhhhh...",
+    ".hssssh...",
+    ".gegegs...",
+    "..ssss....",
+    ".jjjjjj...",
+    "wjjjjjjjjw",
+    ".jjjjjj...",
+    ".jjjjjj...",
+    "..nnnn....",
+    ".nn..nn...",
+    ".on...nn..",
+    ".oo....oo.",
+    "bb......bb"
+  ];
+  var pCanvas = document.getElementById('player-canvas');
+  var pCtx = pCanvas.getContext('2d');
+  pCtx.imageSmoothingEnabled = false;
+
+  function drawSprite(frame, faceDir){
+    var cols = frame[0].length, rows = frame.length;
+    var scale = pCanvas.width / cols;
+    pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+    pCtx.save();
+    if(faceDir < 0){
+      pCtx.translate(pCanvas.width, 0);
+      pCtx.scale(-1, 1);
+    }
+    for(var r=0;r<rows;r++){
+      for(var c=0;c<cols;c++){
+        var ch = frame[r][c];
+        if(ch === '.') continue;
+        pCtx.fillStyle = PALETTE[ch] || '#fff';
+        pCtx.fillRect(c*scale, r*scale, scale+0.5, scale+0.5);
+      }
+    }
+    pCtx.restore();
+  }
+
+  /* ---------------- Ball (pixel grid, matches reference art) ---------------- */
+  var bCanvas = document.getElementById('ball-canvas');
+  var bCtx = bCanvas.getContext('2d');
+  bCtx.imageSmoothingEnabled = false;
+  var BALL_PALETTE = {
+    'w': '#FAF6EC', // ball white
+    'k': '#161210', // pentagon black
+    'd': '#C9C0AE'  // shading
+  };
+  var BALL_FRAME = [
+    "...wkkkw...",
+    "..wwkkkww..",
+    ".wwwwwwwww.",
+    "wwwwwkwwwww",
+    "kkwwkkkwwkk",
+    "kkwwkkkwwkk",
+    "wwwwkkkwwww",
+    "wwwwwwwwwdw",
+    ".wwwwwwwdd.",
+    "..wwwwwdd..",
+    "...wwddd..."
+  ];
+  function drawBall(){
+    var cols = BALL_FRAME[0].length, rows = BALL_FRAME.length;
+    var scale = bCanvas.width / cols;
+    bCtx.clearRect(0,0,bCanvas.width,bCanvas.height);
+    for(var r=0;r<rows;r++){
+      for(var c=0;c<cols;c++){
+        var ch = BALL_FRAME[r][c];
+        if(ch === '.') continue;
+        bCtx.fillStyle = BALL_PALETTE[ch] || '#fff';
+        bCtx.fillRect(c*scale, r*scale, scale+0.5, scale+0.5);
+      }
+    }
+  }
+  drawBall();
+
+  /* ---------------- Clouds ---------------- */
+  (function makeClouds(){
+    var n = 14;
+    for(var i=0;i<n;i++){
+      var el = document.createElement('div');
+      el.className = 'cloud';
+      var w = 30 + Math.random()*40;
+      var h = 10 + Math.random()*8;
+      el.style.width = w+'px';
+      el.style.height = h+'px';
+      el.style.left = (Math.random()*WORLD_W*0.9)+'px';
+      el.style.top = (10 + Math.random()*40)+'%';
+      clouds.appendChild(el);
+    }
+  })();
+
+  /* ---------------- Floodlights ---------------- */
+  var floodlights = ZONES.map(function(z, i){ return document.getElementById('fl-'+i); });
+
+  /* ---------------- Footprints ---------------- */
+  function dropFootprint(worldX, side){
+    var fp = document.createElement('div');
+    fp.className = 'footprint';
+    fp.style.left = worldX + 'px';
+    fp.style.marginLeft = (side * 6) + 'px';
+    footLayer.appendChild(fp);
+    setTimeout(function(){ fp.remove(); }, 1700);
+  }
+
+  /* ---------------- Zones ---------------- */
+  var zoneEls = ZONES.map(function(z, i){ return document.getElementById('zone-'+i); });
+  var dotEls = Array.prototype.slice.call(document.querySelectorAll('.dot-item'));
+
+  function playerWorldX(){
+    // player is drawn at ~32vw from left of viewport
+    return scrollX + window.innerWidth * 0.32;
+  }
+
+  function updateZones(){
+    var px = playerWorldX();
+    var newIdx = currentZoneIdx;
+    for(var i=0;i<ZONES.length;i++){
+      var z = ZONES[i];
+      var active = px > z.x - 260 && px < z.x + z.w + 200;
+      if(active){
+        zoneEls[i].classList.add('active');
+        if(!visited.has(i)){
+          visited.add(i);
+          floodlights[i].classList.add('lit');
+          dotEls[i].classList.add('visited');
+        }
+        if(px >= z.x - 60 && px <= z.x + z.w + 60){
+          newIdx = i;
+        }
+      } else {
+        zoneEls[i].classList.remove('active');
+      }
+    }
+    if(newIdx !== currentZoneIdx){
+      currentZoneIdx = newIdx;
+      dotEls.forEach(function(d,i){ d.classList.toggle('current', i===newIdx); });
+      liveZoneEl.textContent = ZONES[newIdx].label + ' section';
+    }
+  }
+
+  /* ---------------- Jump to zone (dots) ---------------- */
+  function jumpTo(idx){
+    var z = ZONES[idx];
+    var targetPx = z.x + 40;
+    scrollX = clamp(targetPx - window.innerWidth*0.32, 0, maxScroll);
+    render(true);
+    updateZones();
+  }
+  dotEls.forEach(function(d){
+    d.addEventListener('click', function(){
+      jumpTo(parseInt(d.getAttribute('data-zone'),10));
+      dismissIntro();
+    });
+  });
+
+  /* ---------------- Render ---------------- */
+  var animFrame = 0;
+  var frameToggleAcc = 0;
+  var currentFrame = FRAME_A;
+
+  function render(instant){
+    world.style.transform = 'translate3d(' + (-scrollX) + 'px,0,0)';
+    clouds.style.transform = 'translate3d(' + (-scrollX*0.35) + 'px,0,0)';
+    updateZones();
+  }
+
+  /* ---------------- Main loop ---------------- */
+  var SPEED = 4.6;
+  var FOOT_OFFSET = 34;
+  var BALL_ROLL_DEG = 4.4; // degrees per px moved (~360deg per circumference)
+  var ballAngle = 0;
+  var moving = false;
+  var lastTs = null;
+
+  function loop(ts){
+    if(lastTs === null) lastTs = ts;
+    var dt = Math.min(32, ts - lastTs);
+    lastTs = ts;
+
+    var dir = 0;
+    if(keys.left) dir -= 1;
+    if(keys.right) dir += 1;
+
+    moving = dir !== 0;
+
+    if(moving){
+      if(!introDismissed) dismissIntro();
+      facing = dir;
+      var delta = dir * SPEED * (dt/16.67);
+      var prevScroll = scrollX;
+      scrollX = clamp(scrollX + delta, 0, maxScroll);
+      var actualDelta = scrollX - prevScroll;
+      distanceTraveled += Math.abs(actualDelta);
+
+      frameToggleAcc += Math.abs(actualDelta);
+      if(frameToggleAcc > 14){
+        frameToggleAcc = 0;
+        currentFrame = (currentFrame === FRAME_A) ? FRAME_B : FRAME_A;
+        drawSprite(currentFrame, facing);
+      }
+
+      // bob the ball, rolling as it travels
+      ballAngle += actualDelta * BALL_ROLL_DEG;
+      var bounce = Math.abs(Math.sin(distanceTraveled/9)) * 14;
+      var ballSide = Math.sin(distanceTraveled/9) > 0 ? 16 : -16;
+      bCanvas.style.transform = 'translate(' + (ballSide*facing*0.6 - 13 + FOOT_OFFSET*facing*1.2) + 'px,' + (-bounce) + 'px) rotate(' + ballAngle + 'deg)';
+
+      // slight body bob
+      pCanvas.style.transform = 'translate(-50%,' + (-Math.abs(Math.sin(distanceTraveled/9))*3) + 'px)';
+
+      if(distanceTraveled - lastFootAt > 26){
+        lastFootAt = distanceTraveled;
+        dropFootprint(scrollX + window.innerWidth*0.32 - 6, (Math.floor(distanceTraveled/26)%2===0)?1:-1);
+      }
+    } else {
+      bCanvas.style.transform = 'translate(' + (-13 + FOOT_OFFSET*facing) + 'px, 0px) rotate(' + ballAngle + 'deg)';
+      pCanvas.style.transform = 'translate(-50%, 0px)';
+    }
+
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  drawSprite(FRAME_A, facing);
+  requestAnimationFrame(loop);
+
+  /* ---------------- Input ---------------- */
+  function setKey(code, val){
+    if(code === 'ArrowLeft' || code === 'KeyA') keys.left = val;
+    if(code === 'ArrowRight' || code === 'KeyD') keys.right = val;
+  }
+  window.addEventListener('keydown', function(e){
+    if(['ArrowLeft','ArrowRight','KeyA','KeyD'].indexOf(e.code) !== -1){
+      e.preventDefault();
+      setKey(e.code, true);
+      dismissIntro();
+    }
+    if(e.code === 'Home'){ jumpTo(0); }
+    if(e.code === 'End'){ jumpTo(ZONES.length-1); }
+  }, {passive:false});
+  window.addEventListener('keyup', function(e){
+    setKey(e.code, false);
+  });
+
+  var btnLeft = document.getElementById('btn-left');
+  var btnRight = document.getElementById('btn-right');
+  function bindTouch(btn, key){
+    btn.addEventListener('touchstart', function(e){ e.preventDefault(); keys[key]=true; dismissIntro(); }, {passive:false});
+    btn.addEventListener('touchend', function(e){ e.preventDefault(); keys[key]=false; }, {passive:false});
+    btn.addEventListener('mousedown', function(){ keys[key]=true; dismissIntro(); });
+    btn.addEventListener('mouseup', function(){ keys[key]=false; });
+    btn.addEventListener('mouseleave', function(){ keys[key]=false; });
+  }
+  bindTouch(btnLeft, 'left');
+  bindTouch(btnRight, 'right');
+
+  /* ---------------- Intro ---------------- */
+  var introEl = document.getElementById('intro');
+  function dismissIntro(){
+    if(introDismissed) return;
+    introDismissed = true;
+    introEl.classList.add('hidden');
+  }
+  document.getElementById('go-btn').addEventListener('click', dismissIntro);
+
+  /* ---------------- Resize ---------------- */
+  window.addEventListener('resize', function(){
+    maxScroll = computeMaxScroll();
+    syncWorldWidth();
+    scrollX = clamp(scrollX, 0, maxScroll);
+  });
+
+  updateZones();
+})();
+</script>
+</body>
+</html>
