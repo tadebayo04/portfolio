@@ -961,6 +961,7 @@
   var zoneEls = ZONES.map(function(z, i){ return document.getElementById('zone-'+i); });
   var dotEls = Array.prototype.slice.call(document.querySelectorAll('.dot-item'));
   var mobileLayout = window.matchMedia('(max-width: 640px)');
+  var zoneScreenX = ZONES.map(function(){ return null; }); // mobile: card's smoothed screen-space x
 
   function playerWorldX(){
     // player is drawn at ~32vw from left of viewport
@@ -976,10 +977,15 @@
       if(active){
         zoneEls[i].classList.add('active');
         if(mobileLayout.matches){
-          // On small screens, keep the active card centered in the viewport
-          // instead of anchored to its spot on the pitch, so it's always
-          // fully visible (world-anchored cards slide off narrow screens).
-          zoneEls[i].style.left = Math.round(scrollX + (window.innerWidth - zoneEls[i].offsetWidth)/2) + 'px';
+          // On small screens cards ride with the world while walking (same
+          // feel as desktop), then glide to screen center when the player
+          // stops, so a near-viewport-width card is never left half off-screen.
+          var naturalSX = z.x - scrollX;
+          var targetSX = moving ? naturalSX : (window.innerWidth - zoneEls[i].offsetWidth)/2;
+          if(zoneScreenX[i] === null) zoneScreenX[i] = naturalSX;
+          zoneScreenX[i] += (targetSX - zoneScreenX[i]) * 0.12;
+          if(Math.abs(targetSX - zoneScreenX[i]) < 0.5) zoneScreenX[i] = targetSX;
+          zoneEls[i].style.left = Math.round(scrollX + zoneScreenX[i]) + 'px';
         } else if(zoneEls[i].style.left !== z.x + 'px'){
           zoneEls[i].style.left = z.x + 'px';
         }
@@ -993,6 +999,7 @@
         }
       } else {
         zoneEls[i].classList.remove('active');
+        zoneScreenX[i] = null;
       }
     }
     if(newIdx !== currentZoneIdx){
