@@ -9,8 +9,16 @@ Full Time). No build step, no dependencies — everything lives in `index.html`.
 
 - `index.html` — the entire site (HTML + CSS + JS, self-contained). Fonts are
   loaded from Google Fonts via CDN (`Press Start 2P`, `Space Grotesk`,
-  `JetBrains Mono`); everything else is inline, so this one file is fully
-  portable.
+  `JetBrains Mono`); everything else is inline.
+- `profile.jpg` — graduation photo shown in the Classic View hero.
+
+## Classic View
+
+A "Classic View" button in the top bar switches to a standard scrollable
+portfolio page (circular photo, name, links, then the CV sections stacked
+vertically). Content is cloned at runtime from the game-view cards, so
+there is a single source of truth — edit the zone cards and both views
+update. The chosen view is remembered in localStorage.
 
 ## How it works
 
