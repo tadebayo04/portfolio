@@ -960,6 +960,7 @@
   /* ---------------- Zones ---------------- */
   var zoneEls = ZONES.map(function(z, i){ return document.getElementById('zone-'+i); });
   var dotEls = Array.prototype.slice.call(document.querySelectorAll('.dot-item'));
+  var mobileLayout = window.matchMedia('(max-width: 640px)');
 
   function playerWorldX(){
     // player is drawn at ~32vw from left of viewport
@@ -974,6 +975,14 @@
       var active = px > z.x - 260 && px < z.x + z.w + 200;
       if(active){
         zoneEls[i].classList.add('active');
+        if(mobileLayout.matches){
+          // On small screens, keep the active card centered in the viewport
+          // instead of anchored to its spot on the pitch, so it's always
+          // fully visible (world-anchored cards slide off narrow screens).
+          zoneEls[i].style.left = Math.round(scrollX + (window.innerWidth - zoneEls[i].offsetWidth)/2) + 'px';
+        } else if(zoneEls[i].style.left !== z.x + 'px'){
+          zoneEls[i].style.left = z.x + 'px';
+        }
         if(!visited.has(i)){
           visited.add(i);
           floodlights[i].classList.add('lit');
